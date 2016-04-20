@@ -1,0 +1,93 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:sigfood"
+    xmlns:models="using:sigfood.Models"
+    xmlns:conv="using:sigfood.View"
+    x:Class="sigfood.DataTemplates">
+
+    <conv:MoneyFormatConverter x:Key="MoneyToStringFormatConverter"/>
+
+    <DataTemplate x:Key="DetailViewTemplate" x:DataType="models:Offer">
+        <UserControl>
+            <Grid>
+                <VisualStateManager.VisualStateGroups >
+                    <VisualStateGroup>
+                        <VisualState x:Name="DefaultState">
+                            <VisualState.StateTriggers>
+                                <AdaptiveTrigger MinWindowWidth="720" />
+                            </VisualState.StateTriggers>
+                        </VisualState>
+
+                        <VisualState x:Name="NarrowState">
+                            <VisualState.StateTriggers>
+                                <AdaptiveTrigger MinWindowWidth="0" />
+                            </VisualState.StateTriggers>
+
+                            <VisualState.Setters>
+                                <Setter Target="Description.Grid.Column" Value="0" />
+                                <Setter Target="Description.Grid.Row" Value="1" />
+                                <Setter Target="Comments.Grid.Row" Value="2" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" >
+                    <FlipView.ItemTemplate>
+                        <DataTemplate x:DataType="BitmapImage">
+                            <Image Source="{x:Bind }" />
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+
+                <ListView x:Name="Description" Grid.Column="1" Grid.Row="0" SelectionMode="None">
+                    <TextBlock Text="{x:Bind dish.name}" TextWrapping="Wrap"/>
+                    <TextBlock Text="{x:Bind dish.ratingMedian}" />
+                    <TextBlock>
+                    <Run Text="Studenten: " />
+                    <Run Text="{x:Bind costStudent, Converter={StaticResource MoneyToStringFormatConverter}}" />
+                    </TextBlock>
+                    <TextBlock>
+                    <Run Text="Bedienstete: " />
+                    <Run Text="{x:Bind costServant, Converter={StaticResource MoneyToStringFormatConverter}}" />
+                    </TextBlock>
+                    <TextBlock>
+                    <Run Text="Gäste: " />
+                    <Run Text="{x:Bind costGuest, Converter={StaticResource MoneyToStringFormatConverter}}" />
+                    </TextBlock>
+                </ListView>
+
+
+                <ListView x:Name="Comments" Grid.Row="1"  Grid.ColumnSpan="2" SelectionMode="None" ItemsSource="{x:Bind dish.comments}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Comment">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{x:Bind author}" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="1" Text="{x:Bind text}" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind time}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </UserControl>
+    </DataTemplate>
+
+</ResourceDictionary>
