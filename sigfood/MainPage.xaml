@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:conv="using:sigfood.View"
     xmlns:models="using:sigfood.Models"
+    xmlns:rating="using:Bratched.Tools.RatingControl"
     mc:Ignorable="d">
     
     <Page.Resources>
@@ -77,7 +78,14 @@
 
                                             <Image Grid.RowSpan="2" Source="{x:Bind dish.images[0]}" Width="50"/>
                                             <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind dish.name}" TextWrapping="Wrap"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind dish.ratingMedian}"  TextWrapping="Wrap" />
+                                            <rating:RatingControl Grid.Column="1" Grid.Row="1"  ItemsCount="5" HorizontalAlignment="Left" Value="{x:Bind dish.ratingMedian}" Height="20">
+                                                <rating:RatingControl.EmptyItemsDefinition>
+                                                    <rating:RateItemDefinition BackgroundColor="Transparent" OutlineColor="Orange"/>
+                                                </rating:RatingControl.EmptyItemsDefinition>
+                                                <rating:RatingControl.FullItemsDefinition>
+                                                    <rating:RateItemDefinition BackgroundColor="Orange" OutlineColor="Orange"/>
+                                                </rating:RatingControl.FullItemsDefinition>
+                                            </rating:RatingControl>                                            
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

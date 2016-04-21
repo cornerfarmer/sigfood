@@ -1,6 +1,7 @@
 ﻿using sigfood.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -45,8 +46,8 @@ namespace sigfood.Services
                 if (hauptgericht.Descendants("stddev").Count() > 0)
                     dish.ratingStandardDeviation = Convert.ToDouble(hauptgericht.Descendants("stddev").FirstOrDefault().Value);
                 if (hauptgericht.Descendants("schnitt").Count() > 0)
-                    dish.ratingMedian = Convert.ToDouble(hauptgericht.Descendants("schnitt").FirstOrDefault().Value);
-
+                    dish.ratingMedian = double.Parse(hauptgericht.Descendants("schnitt").FirstOrDefault().Value, CultureInfo.InvariantCulture);
+                dish.ratingMedianInverted = 5 - dish.ratingMedian;
                 foreach (XElement bild in hauptgericht.Descendants("bild"))
                 {
                     dish.addImageFromUrl("https://www.sigfood.de/?do=getimage&width=300&bildid=" + bild.Attribute("id").Value);

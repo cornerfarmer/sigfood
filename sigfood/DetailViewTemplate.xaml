@@ -4,9 +4,11 @@
     xmlns:local="using:sigfood"
     xmlns:models="using:sigfood.Models"
     xmlns:conv="using:sigfood.View"
+    xmlns:rating="using:Bratched.Tools.RatingControl"
     x:Class="sigfood.DataTemplates">
 
     <conv:MoneyFormatConverter x:Key="MoneyToStringFormatConverter"/>
+    <conv:RatingPercentageFormatConverter x:Key="RatingPercentageFormatConverter"/>
 
     <DataTemplate x:Key="DetailViewTemplate" x:DataType="models:Offer">
         <UserControl>
@@ -51,14 +53,23 @@
                 <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" >
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="BitmapImage">
-                            <Image Source="{x:Bind }" />
+                            <Image Source="{x:Bind }"  />
                         </DataTemplate>
                     </FlipView.ItemTemplate>
                 </FlipView>
 
                 <ListView x:Name="Description" Grid.Column="1" Grid.Row="0" SelectionMode="None">
                     <TextBlock Text="{x:Bind dish.name}" TextWrapping="Wrap"/>
-                    <TextBlock Text="{x:Bind dish.ratingMedian}" />
+
+                    <rating:RatingControl ItemsCount="5" Value="{x:Bind dish.ratingMedian}" Height="50">
+                        <rating:RatingControl.EmptyItemsDefinition>
+                            <rating:RateItemDefinition BackgroundColor="Transparent" OutlineColor="Orange"/>
+                        </rating:RatingControl.EmptyItemsDefinition>
+                        <rating:RatingControl.FullItemsDefinition>
+                            <rating:RateItemDefinition BackgroundColor="Orange" OutlineColor="Orange"/>
+                        </rating:RatingControl.FullItemsDefinition>
+                    </rating:RatingControl>
+
                     <TextBlock>
                     <Run Text="Studenten: " />
                     <Run Text="{x:Bind costStudent, Converter={StaticResource MoneyToStringFormatConverter}}" />

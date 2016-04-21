@@ -12,6 +12,7 @@ namespace sigfood.Models
         public String name { get; set; }
         public int ratingCounter { get; set; }
         public double ratingMedian { get; set; }
+        public double ratingMedianInverted { get; set; }
         public double ratingStandardDeviation { get; set; }
         public List<Comment> comments { get; set; }
 
