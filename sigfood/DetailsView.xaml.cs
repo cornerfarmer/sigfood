@@ -59,7 +59,7 @@ namespace sigfood
 
         private void Window_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
-            if (e.Size.Width > 920)
+            if (e.Size.Width > 920 && Frame.BackStackDepth > 0)
             {
                 Frame.GoBack();
             }
@@ -68,6 +68,11 @@ namespace sigfood
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SizeChanged -= Window_SizeChanged;
+        }
+
+        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+
         }
     }
 }

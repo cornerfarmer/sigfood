@@ -10,13 +10,16 @@
 
     <DataTemplate x:Key="DetailViewTemplate" x:DataType="models:Offer">
         <UserControl>
-            <Grid>
+            <Grid x:Name="DetailGrid">
                 <VisualStateManager.VisualStateGroups >
                     <VisualStateGroup>
                         <VisualState x:Name="DefaultState">
                             <VisualState.StateTriggers>
                                 <AdaptiveTrigger MinWindowWidth="720" />
                             </VisualState.StateTriggers>
+                            <VisualState.Setters>
+                                <Setter Target="DetailGrid.RowDefinitions[2].Height" Value="0" />
+                            </VisualState.Setters>
                         </VisualState>
 
                         <VisualState x:Name="NarrowState">
@@ -25,9 +28,10 @@
                             </VisualState.StateTriggers>
 
                             <VisualState.Setters>
-                                <Setter Target="Description.Grid.Column" Value="0" />
-                                <Setter Target="Description.Grid.Row" Value="1" />
-                                <Setter Target="Comments.Grid.Row" Value="2" />
+                                <Setter Target="Description.(Grid.Column)" Value="0" />
+                                <Setter Target="Description.(Grid.Row)" Value="1" />
+                                <Setter Target="Comments.(Grid.Row)" Value="2" />
+                                <Setter Target="DetailGrid.RowDefinitions[2].Height" Value="*" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -36,7 +40,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition x:Name="LastRow"/>
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>

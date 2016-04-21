@@ -18,7 +18,7 @@
     </Page.Resources>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+               
         <ContentPresenter
             x:Name="DetailContentPresenter"
             Content="{Binding selectedDay.menu.SelectedOffer}"
