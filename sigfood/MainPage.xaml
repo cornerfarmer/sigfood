@@ -62,7 +62,7 @@
                                 Grid.Column="0"
                                 ItemsSource="{x:Bind menu.offers}"
                                 IsItemClickEnabled="True"
-                                ItemClick="ListView_ItemClick">
+                                ItemClick="ListView_ItemClick" ItemContainerStyle="{ThemeResource MasterListViewItem}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Offer">
                                         <Grid>
@@ -76,8 +76,8 @@
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
 
-                                            <Image Grid.RowSpan="2" Source="{x:Bind dish.images[0]}" Width="50"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind dish.name}" TextWrapping="Wrap"/>
+                                            <Image Grid.RowSpan="2" Source="{x:Bind dish.images[0]}" Style="{ThemeResource MasterPreviewImage}"/>
+                                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind dish.name}" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}"/>
                                             <rating:RatingControl Grid.Column="1" Grid.Row="1"  ItemsCount="5" HorizontalAlignment="Left" Value="{x:Bind dish.ratingMedian}" Height="20">
                                                 <rating:RatingControl.EmptyItemsDefinition>
                                                     <rating:RateItemDefinition BackgroundColor="Transparent" OutlineColor="Orange"/>

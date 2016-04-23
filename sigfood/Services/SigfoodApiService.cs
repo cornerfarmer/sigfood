@@ -15,9 +15,9 @@ namespace sigfood.Services
 {
     class SigfoodApiService
     {
-        public static Day getDataOfDate(DateTime date)
+        public static Day getDataOfDate(DateTime? date = null)
         {
-            String url = "https://www.sigfood.de/?do=api.gettagesplan&datum=" + date.ToString("yyyy-MM-dd");
+            String url = "https://www.sigfood.de/?do=api.gettagesplan" + (date != null ? "&datum=" + date.Value.ToString("yyyy-MM-dd") : "");
             XmlDocument doc = new XmlDocument();
             HttpClient client = new HttpClient();
 
@@ -76,6 +76,7 @@ namespace sigfood.Services
                     offer.costGuest = Convert.ToInt32(mensaEssen.Descendants("preisgast").FirstOrDefault().Value);
                 menu.offers.Add(offer);
             }
+            
             menu.SelectedOffer = menu.offers[0];
 
             day.menu = menu;

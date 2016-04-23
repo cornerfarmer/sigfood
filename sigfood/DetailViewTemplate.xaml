@@ -46,20 +46,20 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" >
+                <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" Style="{ThemeResource DetailFlipView}">
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="BitmapImage">
-                            <Image Source="{x:Bind }"  />
+                            <Image Source="{x:Bind }"   />
                         </DataTemplate>
                     </FlipView.ItemTemplate>
                 </FlipView>
 
                 <ListView x:Name="Description" Grid.Column="1" Grid.Row="0" SelectionMode="None">
-                    <TextBlock Text="{x:Bind dish.name}" TextWrapping="Wrap"/>
+                    <TextBlock Text="{x:Bind dish.name}" TextWrapping="Wrap" Style="{ThemeResource TitleTextBlockStyle}"/>
 
                     <rating:RatingControl ItemsCount="5" Value="{x:Bind dish.ratingMedian}" Height="50">
                         <rating:RatingControl.EmptyItemsDefinition>
@@ -70,22 +70,22 @@
                         </rating:RatingControl.FullItemsDefinition>
                     </rating:RatingControl>
 
-                    <TextBlock>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
                     <Run Text="Studenten: " />
                     <Run Text="{x:Bind costStudent, Converter={StaticResource MoneyToStringFormatConverter}}" />
                     </TextBlock>
-                    <TextBlock>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
                     <Run Text="Bedienstete: " />
                     <Run Text="{x:Bind costServant, Converter={StaticResource MoneyToStringFormatConverter}}" />
                     </TextBlock>
-                    <TextBlock>
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}">
                     <Run Text="Gäste: " />
                     <Run Text="{x:Bind costGuest, Converter={StaticResource MoneyToStringFormatConverter}}" />
                     </TextBlock>
                 </ListView>
 
 
-                <ListView x:Name="Comments" Grid.Row="1"  Grid.ColumnSpan="2" SelectionMode="None" ItemsSource="{x:Bind dish.comments}">
+                <ListView x:Name="Comments" Grid.Row="1"  Grid.ColumnSpan="2" SelectionMode="None" ItemsSource="{x:Bind dish.comments}" ItemContainerStyle="{ThemeResource DetailCommentListViewItem}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:Comment">
                             <Grid>
@@ -94,9 +94,9 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{x:Bind author}" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" Text="{x:Bind text}" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="2" Text="{x:Bind time}"/>
+                                <TextBlock Grid.Row="0" Text="{x:Bind author}" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <TextBlock Grid.Row="1" Text="{x:Bind text}" TextWrapping="Wrap" Style="{ThemeResource BodyTextBlockStyle}"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind time}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

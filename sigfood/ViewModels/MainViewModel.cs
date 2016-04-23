@@ -37,7 +37,7 @@ namespace sigfood.ViewModels
         {
             PivotItems = new ObservableCollection<Day>();
 
-            PivotItems.Add(SigfoodApiService.getDataOfDate(DateTime.Now));
+            PivotItems.Add(SigfoodApiService.getDataOfDate());
             
             for (int i = 0; i < 3 && PivotItems.Last().nextDate != null; i++)
             {

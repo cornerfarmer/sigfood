@@ -5,4 +5,34 @@
     xmlns:local="using:sigfood"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Style x:Key="MasterPreviewImage" TargetType="Image">
+                        <Setter Property="MaxHeight" Value="100" />
+                        <Setter Property="MaxWidth" Value="100" />
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+
+                    <Style x:Key="MasterListViewItem" TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="10" />
+                    </Style>
+
+                    <Style x:Key="DetailFlipView" TargetType="FlipView">
+                        <Setter Property="MaxHeight" Value="300" />
+                        <Setter Property="MaxWidth" Value="300" />
+                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                        <Setter Property="Margin" Value="40,0,40,0" />
+                    </Style>
+
+                    <Style x:Key="DetailCommentListViewItem" TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="10" />
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                    
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
