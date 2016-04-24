@@ -25,7 +25,6 @@ namespace sigfood.Services
             WebResponse response = request.GetResponseAsync().Result;
             StreamReader reader = new StreamReader(response.GetResponseStream());
             string test = reader.ReadToEnd();
-            //String stream = client.GetStringAsync("https://www.sigfood.de/?do=api.gettagesplan&datum=2016-04-12").Result;
            
             Day day = new Day();
             XDocument xdoc = XDocument.Parse(test);
@@ -50,7 +49,7 @@ namespace sigfood.Services
                 dish.ratingMedianInverted = 5 - dish.ratingMedian;
                 foreach (XElement bild in hauptgericht.Descendants("bild"))
                 {
-                    dish.addImageFromUrl("https://www.sigfood.de/?do=getimage&width=300&bildid=" + bild.Attribute("id").Value);
+                    dish.addImageFromUrl("https://www.sigfood.de/?do=getimage&width=500&bildid=" + bild.Attribute("id").Value);
                 }
                 if (dish.images.Count == 0)
                     dish.addImageFromUrl("http://www.sigfood.de/mensa//nophotoavailable000.png");

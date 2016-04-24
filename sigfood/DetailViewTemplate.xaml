@@ -20,7 +20,11 @@
                                 <AdaptiveTrigger MinWindowWidth="720" />
                             </VisualState.StateTriggers>
                             <VisualState.Setters>
+                                <Setter Target="DetailGrid.RowDefinitions[0].Height" Value="Auto" />
+                                <Setter Target="Image.MaxHeight" Value="300" />
+                                <Setter Target="DetailGrid.RowDefinitions[1].Height" Value="*" />
                                 <Setter Target="DetailGrid.RowDefinitions[2].Height" Value="0" />
+                                <Setter Target="DetailGrid.ColumnDefinitions[1].Width" Value="*" />
                             </VisualState.Setters>
                         </VisualState>
 
@@ -33,7 +37,11 @@
                                 <Setter Target="Description.(Grid.Column)" Value="0" />
                                 <Setter Target="Description.(Grid.Row)" Value="1" />
                                 <Setter Target="Comments.(Grid.Row)" Value="2" />
+                                <Setter Target="DetailGrid.RowDefinitions[0].Height" Value="*" />
+                                <Setter Target="Image.MaxHeight" Value="500" />
+                                <Setter Target="DetailGrid.RowDefinitions[1].Height" Value="*" />
                                 <Setter Target="DetailGrid.RowDefinitions[2].Height" Value="*" />
+                                <Setter Target="DetailGrid.ColumnDefinitions[1].Width" Value="0" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -46,11 +54,11 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition/>
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" Style="{ThemeResource DetailFlipView}">
+                <FlipView x:Name="Image" Grid.Column="0" Grid.Row="0" ItemsSource="{x:Bind dish.images}" Style="{ThemeResource DetailFlipView}" >
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="BitmapImage">
                             <Image Source="{x:Bind }"   />
@@ -58,7 +66,7 @@
                     </FlipView.ItemTemplate>
                 </FlipView>
 
-                <ListView x:Name="Description" Grid.Column="1" Grid.Row="0" SelectionMode="None">
+                <ListView x:Name="Description" Grid.Column="1" Grid.Row="0" SelectionMode="None" Style="{ThemeResource DetailDescription}" >
                     <TextBlock Text="{x:Bind dish.name}" TextWrapping="Wrap" Style="{ThemeResource TitleTextBlockStyle}"/>
 
                     <rating:RatingControl ItemsCount="5" Value="{x:Bind dish.ratingMedian}" Height="50">

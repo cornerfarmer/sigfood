@@ -20,10 +20,12 @@
                     </Style>
 
                     <Style x:Key="DetailFlipView" TargetType="FlipView">
-                        <Setter Property="MaxHeight" Value="300" />
-                        <Setter Property="MaxWidth" Value="300" />
                         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                         <Setter Property="Margin" Value="40,0,40,0" />
+                    </Style>
+
+                    <Style x:Key="DetailDescription" TargetType="ListView">
+                        <Setter Property="Margin" Value="0,40,0,40" />
                     </Style>
 
                     <Style x:Key="DetailCommentListViewItem" TargetType="ListViewItem">
