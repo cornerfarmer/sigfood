@@ -93,7 +93,7 @@
                 </ListView>
 
 
-                <ListView x:Name="Comments" Grid.Row="1"  Grid.ColumnSpan="2" SelectionMode="None" ItemsSource="{x:Bind dish.comments}" ItemContainerStyle="{ThemeResource DetailCommentListViewItem}">
+                <ListView x:Name="Comments" Grid.Row="1"  Grid.ColumnSpan="2" SelectionMode="None" ItemsSource="{x:Bind dish.comments}" ItemContainerStyle="{ThemeResource DetailCommentListViewItem}" Style="{ThemeResource DetailComments}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:Comment">
                             <Grid>

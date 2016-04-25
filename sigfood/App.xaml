@@ -15,10 +15,28 @@
                         <Setter Property="Margin" Value="10" />
                     </Style>
 
-                    <Style x:Key="MasterListViewItem" TargetType="ListViewItem">
-                        <Setter Property="Padding" Value="10" />
+                    <Style x:Key="MasterPivotItem" TargetType="PivotItem">
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="BorderThickness" Value="2" />
+                        <Setter Property="BorderBrush" Value="Gray" />
                     </Style>
 
+                    <Style x:Key="MasterPivot" TargetType="Pivot">    
+                        
+                    </Style>
+
+                    <Style x:Key="MasterListViewItem" TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="10" />
+                        <Setter Property="BorderThickness" Value="0, 0, 0, 2" />
+                        <Setter Property="BorderBrush" Value="Gray" />
+                        <Setter Property="Background" Value="SystemAccentColor" />
+                    </Style>
+
+                    <Style x:Key="MasterListView" TargetType="ListView">
+                        <Setter Property="BorderThickness" Value="0, 0, 2, 0" />
+                        <Setter Property="BorderBrush" Value="Gray" />
+                    </Style>
+                    
                     <Style x:Key="DetailFlipView" TargetType="FlipView">
                         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                         <Setter Property="Margin" Value="40,0,40,0" />
@@ -26,13 +44,18 @@
 
                     <Style x:Key="DetailDescription" TargetType="ListView">
                         <Setter Property="Margin" Value="0,40,0,40" />
+                        <Setter Property="BorderThickness" Value="2, 0, 0, 0" />
+                        <Setter Property="BorderBrush" Value="Gray" />
                     </Style>
 
                     <Style x:Key="DetailCommentListViewItem" TargetType="ListViewItem">
                         <Setter Property="Padding" Value="10" />
                         <Setter Property="Margin" Value="5" />
                     </Style>
-                    
+
+                    <Style x:Key="DetailComments" TargetType="ListView">
+                    </Style>
+
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

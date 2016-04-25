@@ -21,16 +21,24 @@
     </Page.Resources>    
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot x:Name="DayPivot" ItemsSource="{Binding PivotItems}" SelectionChanged="DayPivot_SelectionChanged">
+        <Pivot x:Name="DayPivot" ItemsSource="{Binding PivotItems}" SelectionChanged="DayPivot_SelectionChanged" ItemContainerStyle="{ThemeResource MasterPivotItem}" Style="{ThemeResource MasterPivot}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="models:Day">
-                    <TextBlock Text="{x:Bind date, Converter={StaticResource DateToStringFormatConverter}}"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="{x:Bind date, Converter={StaticResource DateToStringFormatConverter}}"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind date.DayOfWeek}" Style="{ThemeResource CaptionTextBlockStyle}" TextAlignment="Center" />
+                    </Grid>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="models:Day">
                     <UserControl>
-                        <Grid>
+                        <Grid BorderThickness="0, 2, 0, 0" BorderBrush="Gray">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged" >
                                     <VisualState x:Name="DefaultState">
@@ -62,7 +70,7 @@
                                 Grid.Column="0"
                                 ItemsSource="{x:Bind menu.offers}"
                                 IsItemClickEnabled="True"
-                                ItemClick="ListView_ItemClick" ItemContainerStyle="{ThemeResource MasterListViewItem}">
+                                ItemClick="ListView_ItemClick" Style="{ThemeResource MasterListView}" ItemContainerStyle="{ThemeResource MasterListViewItem}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Offer">
                                         <Grid>
@@ -85,7 +93,7 @@
                                                 <rating:RatingControl.FullItemsDefinition>
                                                     <rating:RateItemDefinition BackgroundColor="Orange" OutlineColor="Orange"/>
                                                 </rating:RatingControl.FullItemsDefinition>
-                                            </rating:RatingControl>                                            
+                                            </rating:RatingControl>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
