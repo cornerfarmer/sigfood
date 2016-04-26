@@ -1,4 +1,5 @@
 ﻿using sigfood.Models;
+using sigfood.Services;
 using sigfood.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,9 +32,21 @@ namespace sigfood
         Random r;
         public MainPage()
         {
+            //PC customization
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                if (titleBar != null)
+                {
+                    titleBar.ButtonBackgroundColor = Colors.LightGray;
+                    titleBar.BackgroundColor = Colors.LightGray;
+                }
+            }
+            
             r = new Random();
             DataContext = Utility.viewModel;
             this.InitializeComponent();
+            DayPivot.SelectedIndex = (DataContext as MainViewModel).PivotItems.IndexOf((DataContext as MainViewModel).selectedDay);
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -44,6 +60,7 @@ namespace sigfood
         private void DayPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Utility.viewModel.selectedDay = (Day)DayPivot.SelectedItem;
+            (DataContext as MainViewModel).loadNext();   
         }
 
         private void AdaptiveStates_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
@@ -57,6 +74,11 @@ namespace sigfood
         private void gotoDetailView()
         {
             Frame.Navigate(typeof(DetailsView), new SuppressNavigationTransitionInfo());
+        }
+
+        private void MasterListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            (sender as ListView).SelectedIndex = 0;
         }
     }
 }

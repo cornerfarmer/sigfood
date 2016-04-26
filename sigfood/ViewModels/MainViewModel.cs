@@ -38,16 +38,22 @@ namespace sigfood.ViewModels
             PivotItems = new ObservableCollection<Day>();
 
             PivotItems.Add(SigfoodApiService.getDataOfDate());
-            
-            for (int i = 0; i < 3 && PivotItems.Last().nextDate != null; i++)
+
+            selectedDay = PivotItems.First();
+
+            loadNext();
+        }
+        
+        public void loadNext()
+        {
+            while(PivotItems.Count - PivotItems.IndexOf(selectedDay) - 1 < 3 && PivotItems.Last().nextDate != null)
             {
                 PivotItems.Add(SigfoodApiService.getDataOfDate(PivotItems.Last().nextDate));
             }
-            for (int i = 0; i < 3 && PivotItems.First().prevDate != null; i++)
+            while (PivotItems.IndexOf(selectedDay) < 3 && PivotItems.First().prevDate != null)
             {
                 PivotItems.Insert(0, SigfoodApiService.getDataOfDate(PivotItems.First().prevDate));
             }
         }
-        
     }
 }

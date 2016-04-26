@@ -17,6 +17,7 @@ namespace sigfood.Services
     {
         public static Day getDataOfDate(DateTime? date = null)
         {
+            
             String url = "https://www.sigfood.de/?do=api.gettagesplan" + (date != null ? "&datum=" + date.Value.ToString("yyyy-MM-dd") : "");
             XmlDocument doc = new XmlDocument();
             HttpClient client = new HttpClient();
@@ -33,7 +34,12 @@ namespace sigfood.Services
             day.date = DateTime.Parse(tagesMenue.Descendants("tag").FirstOrDefault().Value);
             if (tagesMenue.Descendants("naechstertag").Count() > 0)
                 day.nextDate = DateTime.Parse(tagesMenue.Descendants("naechstertag").FirstOrDefault().Value);
-            day.prevDate = DateTime.Parse(tagesMenue.Descendants("vorherigertag").FirstOrDefault().Value);
+            else
+                day.nextDate = null;
+            if (tagesMenue.Descendants("vorherigertag").Count() > 0)
+                day.prevDate = DateTime.Parse(tagesMenue.Descendants("vorherigertag").FirstOrDefault().Value);
+            else
+                day.prevDate = null;
             Menu menu = new Menu();
             foreach (XElement mensaEssen in tagesMenue.Descendants("Mensaessen"))
             {
