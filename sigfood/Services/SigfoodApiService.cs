@@ -24,7 +24,8 @@ namespace sigfood.Services
 
             var request = WebRequest.CreateHttp(url);
             WebResponse response = request.GetResponseAsync().Result;
-            StreamReader reader = new StreamReader(response.GetResponseStream());
+            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("iso-8859-1"));
+            
             string test = reader.ReadToEnd();
            
             Day day = new Day();
