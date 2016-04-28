@@ -12,7 +12,7 @@
 
     <DataTemplate x:Key="DetailViewTemplate" x:DataType="models:Offer">
         <UserControl>
-            <Grid x:Name="DetailGrid">
+            <Grid>
                 <VisualStateManager.VisualStateGroups >
                     <VisualStateGroup>
                         <VisualState x:Name="DefaultState">
@@ -38,14 +38,19 @@
                                 <Setter Target="Description.(Grid.Row)" Value="1" />
                                 <Setter Target="Comments.(Grid.Row)" Value="2" />
                                 <Setter Target="DetailGrid.RowDefinitions[0].Height" Value="*" />
-                                <Setter Target="Image.MaxHeight" Value="500" />
+                                <Setter Target="Image.MaxHeight" Value="300" />
                                 <Setter Target="DetailGrid.RowDefinitions[1].Height" Value="*" />
                                 <Setter Target="DetailGrid.RowDefinitions[2].Height" Value="*" />
                                 <Setter Target="DetailGrid.ColumnDefinitions[1].Width" Value="0" />
+                                <Setter Target="Description.BorderThickness" Value="0" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
+           
+            <ScrollViewer x:Name="MainScrollViewer" >
+            <Grid x:Name="DetailGrid">
+               
 
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -109,6 +114,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </Grid>
+            </ScrollViewer>
             </Grid>
         </UserControl>
     </DataTemplate>
