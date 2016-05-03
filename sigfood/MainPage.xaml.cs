@@ -1,26 +1,12 @@
 ﻿using sigfood.Models;
-using sigfood.Services;
 using sigfood.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 // Die Vorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 dokumentiert.
 
@@ -46,9 +32,13 @@ namespace sigfood
             }
             
             r = new Random();
-            DataContext = Utility.viewModel;
             this.InitializeComponent();
-            DayPivot.SelectedIndex = (DataContext as MainViewModel).PivotItems.IndexOf((DataContext as MainViewModel).selectedDay);
+         
+            DataContext = Utility.viewModel;
+            if ((DataContext as MainViewModel).selectedDay != null)
+                DayPivot.SelectedIndex = (DataContext as MainViewModel).PivotItems.IndexOf((DataContext as MainViewModel).selectedDay);
+          
+            
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -66,7 +56,14 @@ namespace sigfood
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
             () =>
             {
-                Utility.viewModel.loadNext();
+                try
+                {
+                    Utility.viewModel.loadNext();
+                }
+                catch(System.Net.WebException ex)
+                {
+
+                }
             });
         }
 
@@ -83,9 +80,25 @@ namespace sigfood
             Frame.Navigate(typeof(DetailsView), new SuppressNavigationTransitionInfo());
         }
 
+        private void gotoErrorView()
+        {
+            bool e = Frame.Navigate(typeof(NetworkError));
+        }
+
         private void MasterListView_Loaded(object sender, RoutedEventArgs e)
         {
             (sender as ListView).SelectedIndex = 0;
+        }
+
+        private void Page_Loading(FrameworkElement sender, object args)
+        {
+           
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if ((DataContext as MainViewModel).hasLoadingError())
+                gotoErrorView();
         }
     }
 }

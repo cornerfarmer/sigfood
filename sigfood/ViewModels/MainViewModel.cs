@@ -36,16 +36,26 @@ namespace sigfood.ViewModels
         public MainViewModel()
         {
             PivotItems = new ObservableCollection<Day>();
+            try
+            {          
+                loadNext();
+            }
+            catch (System.Net.WebException e)
+            {
 
-            PivotItems.Add(SigfoodApiService.getDataOfDate());
+            }
 
-            selectedDay = PivotItems.First();
-
-            loadNext();
         }
-        
+
         public void loadNext()
         {
+            if (PivotItems.Count == 0)
+            {
+                PivotItems.Add(SigfoodApiService.getDataOfDate());
+
+                selectedDay = PivotItems.First();
+            }
+
             while(PivotItems.Count - PivotItems.IndexOf(selectedDay) - 1 < 3 && PivotItems.Last().nextDate != null)
             {
                 PivotItems.Add(SigfoodApiService.getDataOfDate(PivotItems.Last().nextDate));
@@ -54,6 +64,11 @@ namespace sigfood.ViewModels
             {
                 PivotItems.Insert(0, SigfoodApiService.getDataOfDate(PivotItems.First().prevDate));
             }
+        }
+
+        public bool hasLoadingError()
+        {
+            return PivotItems.Count == 0;
         }
     }
 }

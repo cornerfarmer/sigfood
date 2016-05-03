@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="sigfood.NetworkError"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:sigfood"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Grid Background="#BFC67D" Padding="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Foreground="White">
+            Es konnte keine Verbindung zum sigfood.de Server hergestellt werden :(
+        </TextBlock>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Grid.Row="1" Foreground="White" Padding="0,15">
+            Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind.
+        </TextBlock>
+        <Button Click="Button_Click" Grid.Row="2">Wiederholen</Button>
+    </Grid>
+</Page>

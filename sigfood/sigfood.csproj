@@ -113,6 +113,9 @@
     <Compile Include="Models\Dish.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Offer.cs" />
+    <Compile Include="NetworkError.xaml.cs">
+      <DependentUpon>NetworkError.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SigfoodApiService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -157,6 +160,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NetworkError.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

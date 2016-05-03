@@ -17,76 +17,82 @@ namespace sigfood.Services
     {
         public static Day getDataOfDate(DateTime? date = null)
         {
-            
-            String url = "https://www.sigfood.de/?do=api.gettagesplan" + (date != null ? "&datum=" + date.Value.ToString("yyyy-MM-dd") : "");
-            XmlDocument doc = new XmlDocument();
-            HttpClient client = new HttpClient();
-
-            var request = WebRequest.CreateHttp(url);
-            WebResponse response = request.GetResponseAsync().Result;
-            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("iso-8859-1"));
-            
-            string test = reader.ReadToEnd();
-           
-            Day day = new Day();
-            XDocument xdoc = XDocument.Parse(test);
-
-            XElement tagesMenue = xdoc.Descendants("Tagesmenue").FirstOrDefault();
-            day.date = DateTime.Parse(tagesMenue.Descendants("tag").FirstOrDefault().Value);
-            if (tagesMenue.Descendants("naechstertag").Count() > 0)
-                day.nextDate = DateTime.Parse(tagesMenue.Descendants("naechstertag").FirstOrDefault().Value);
-            else
-                day.nextDate = null;
-            if (tagesMenue.Descendants("vorherigertag").Count() > 0)
-                day.prevDate = DateTime.Parse(tagesMenue.Descendants("vorherigertag").FirstOrDefault().Value);
-            else
-                day.prevDate = null;
-            Menu menu = new Menu();
-            foreach (XElement mensaEssen in tagesMenue.Descendants("Mensaessen"))
+            try
             {
-                Offer offer = new Offer();
-                Dish dish = new Dish();
-                XElement hauptgericht = mensaEssen.Descendants("hauptgericht").FirstOrDefault();
-                dish.name = WebUtility.HtmlDecode(hauptgericht.Descendants("bezeichnung").FirstOrDefault().Value);
-                dish.ratingCounter = Convert.ToInt32(hauptgericht.Descendants("anzahl").FirstOrDefault().Value);
-                if (hauptgericht.Descendants("stddev").Count() > 0)
-                    dish.ratingStandardDeviation = Convert.ToDouble(hauptgericht.Descendants("stddev").FirstOrDefault().Value);
-                if (hauptgericht.Descendants("schnitt").Count() > 0)
-                    dish.ratingMedian = double.Parse(hauptgericht.Descendants("schnitt").FirstOrDefault().Value, CultureInfo.InvariantCulture);
-                dish.ratingMedianInverted = 5 - dish.ratingMedian;
-                foreach (XElement bild in hauptgericht.Descendants("bild"))
+                String url = "https://www.sigfood.de/?do=api.gettagesplan" + (date != null ? "&datum=" + date.Value.ToString("yyyy-MM-dd") : "");
+                XmlDocument doc = new XmlDocument();
+                HttpClient client = new HttpClient();
+
+                var request = WebRequest.CreateHttp(url);
+                WebResponse response = request.GetResponseAsync().Result;
+                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("iso-8859-1"));
+
+                string test = reader.ReadToEnd();
+
+                Day day = new Day();
+                XDocument xdoc = XDocument.Parse(test);
+
+                XElement tagesMenue = xdoc.Descendants("Tagesmenue").FirstOrDefault();
+                day.date = DateTime.Parse(tagesMenue.Descendants("tag").FirstOrDefault().Value);
+                if (tagesMenue.Descendants("naechstertag").Count() > 0)
+                    day.nextDate = DateTime.Parse(tagesMenue.Descendants("naechstertag").FirstOrDefault().Value);
+                else
+                    day.nextDate = null;
+                if (tagesMenue.Descendants("vorherigertag").Count() > 0)
+                    day.prevDate = DateTime.Parse(tagesMenue.Descendants("vorherigertag").FirstOrDefault().Value);
+                else
+                    day.prevDate = null;
+                Menu menu = new Menu();
+                foreach (XElement mensaEssen in tagesMenue.Descendants("Mensaessen"))
                 {
-                    dish.addImageFromUrl("https://www.sigfood.de/?do=getimage&width=500&bildid=" + bild.Attribute("id").Value);
+                    Offer offer = new Offer();
+                    Dish dish = new Dish();
+                    XElement hauptgericht = mensaEssen.Descendants("hauptgericht").FirstOrDefault();
+                    dish.name = WebUtility.HtmlDecode(hauptgericht.Descendants("bezeichnung").FirstOrDefault().Value);
+                    dish.ratingCounter = Convert.ToInt32(hauptgericht.Descendants("anzahl").FirstOrDefault().Value);
+                    if (hauptgericht.Descendants("stddev").Count() > 0)
+                        dish.ratingStandardDeviation = Convert.ToDouble(hauptgericht.Descendants("stddev").FirstOrDefault().Value);
+                    if (hauptgericht.Descendants("schnitt").Count() > 0)
+                        dish.ratingMedian = double.Parse(hauptgericht.Descendants("schnitt").FirstOrDefault().Value, CultureInfo.InvariantCulture);
+                    dish.ratingMedianInverted = 5 - dish.ratingMedian;
+                    foreach (XElement bild in hauptgericht.Descendants("bild"))
+                    {
+                        dish.addImageFromUrl("https://www.sigfood.de/?do=getimage&width=500&bildid=" + bild.Attribute("id").Value);
+                    }
+                    if (dish.images.Count == 0)
+                        dish.addImageFromUrl("http://www.sigfood.de/mensa//nophotoavailable000.png");
+
+                    foreach (XElement kommentar in hauptgericht.Descendants("kommentar"))
+                    {
+                        Comment comment = new Comment();
+                        if (kommentar.Descendants("nick").Count() > 0)
+                            comment.author = WebUtility.HtmlDecode(kommentar.Descendants("nick").FirstOrDefault().Value);
+                        comment.text = WebUtility.HtmlDecode(kommentar.Descendants("text").FirstOrDefault().Value);
+                        comment.time = DateTime.Parse(kommentar.Descendants("formattedtime").FirstOrDefault().Value);
+                        dish.comments.Add(comment);
+                    }
+
+
+
+                    offer.dish = dish;
+                    if (mensaEssen.Descendants("preisstud").Count() > 0)
+                        offer.costStudent = Convert.ToInt32(mensaEssen.Descendants("preisstud").FirstOrDefault().Value);
+                    if (mensaEssen.Descendants("preisbed").Count() > 0)
+                        offer.costServant = Convert.ToInt32(mensaEssen.Descendants("preisbed").FirstOrDefault().Value);
+                    if (mensaEssen.Descendants("preisgast").Count() > 0)
+                        offer.costGuest = Convert.ToInt32(mensaEssen.Descendants("preisgast").FirstOrDefault().Value);
+                    menu.offers.Add(offer);
                 }
-                if (dish.images.Count == 0)
-                    dish.addImageFromUrl("http://www.sigfood.de/mensa//nophotoavailable000.png");
 
-                foreach (XElement kommentar in hauptgericht.Descendants("kommentar"))
-                {
-                    Comment comment = new Comment();
-                    if (kommentar.Descendants("nick").Count() > 0)
-                        comment.author = WebUtility.HtmlDecode(kommentar.Descendants("nick").FirstOrDefault().Value);
-                    comment.text = WebUtility.HtmlDecode(kommentar.Descendants("text").FirstOrDefault().Value);
-                    comment.time = DateTime.Parse(kommentar.Descendants("formattedtime").FirstOrDefault().Value);
-                    dish.comments.Add(comment);
-                }
+                menu.SelectedOffer = menu.offers[0];
 
-               
-
-                offer.dish = dish;
-                if (mensaEssen.Descendants("preisstud").Count() > 0)
-                    offer.costStudent = Convert.ToInt32(mensaEssen.Descendants("preisstud").FirstOrDefault().Value);
-                if (mensaEssen.Descendants("preisbed").Count() > 0)
-                    offer.costServant = Convert.ToInt32(mensaEssen.Descendants("preisbed").FirstOrDefault().Value);
-                if (mensaEssen.Descendants("preisgast").Count() > 0)
-                    offer.costGuest = Convert.ToInt32(mensaEssen.Descendants("preisgast").FirstOrDefault().Value);
-                menu.offers.Add(offer);
+                day.menu = menu;
+                return day;
             }
-            
-            menu.SelectedOffer = menu.offers[0];
-
-            day.menu = menu;
-            return day;
+            catch(Exception e)
+            {
+                throw new WebException();
+            }
         }
     }
 }

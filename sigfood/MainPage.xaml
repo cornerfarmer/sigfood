@@ -8,7 +8,8 @@
     xmlns:conv="using:sigfood.View"
     xmlns:models="using:sigfood.Models"
     xmlns:rating="using:Bratched.Tools.RatingControl"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
     
     <Page.Resources>
         <ResourceDictionary>
