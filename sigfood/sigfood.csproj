@@ -129,9 +129,8 @@
     <None Include="sigfood_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\rating-off.png" />
-    <Content Include="Assets\rating-on.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48_altform-unplated.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
