@@ -10,113 +10,154 @@
     xmlns:rating="using:Bratched.Tools.RatingControl"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
-    
+
     <Page.Resources>
         <ResourceDictionary>
             <conv:DateFormatConverter x:Key="DateToStringFormatConverter"/>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <local:DataTemplates/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="0, 2, 0, 0" BorderBrush="#999E64">
-        <Pivot x:Name="DayPivot" ItemsSource="{Binding PivotItems}"  SelectionChanged="DayPivot_SelectionChanged" ItemContainerStyle="{ThemeResource MasterPivotItem}" Style="{ThemeResource MasterPivot}">
-            <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="models:Day">
-                    <Grid Margin="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        
-                        <TextBlock Text="{x:Bind date, Converter={StaticResource DateToStringFormatConverter}}"/>
-                        <TextBlock Grid.Row="1" Text="{x:Bind date.DayOfWeek}" Style="{ThemeResource CaptionTextBlockStyle}" TextAlignment="Center" />
-                    </Grid>
-                </DataTemplate>
-            </Pivot.HeaderTemplate>
-            <Pivot.ItemTemplate>
-                <DataTemplate x:DataType="models:Day">
-                    <UserControl>
-                        <Grid BorderThickness="0, 2, 0, 0" BorderBrush="#999E64">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged" >
-                                    <VisualState x:Name="DefaultState">
-                                        <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="920" />
-                                        </VisualState.StateTriggers>
-                                    </VisualState>
 
-                                    <VisualState x:Name="NarrowState">
-                                        <VisualState.StateTriggers>
-                                            <AdaptiveTrigger MinWindowWidth="0" />
-                                        </VisualState.StateTriggers>
 
-                                        <VisualState.Setters>
-                                            <Setter Target="MasterColumn.Width" Value="*" />
-                                            <Setter Target="DetailColumn.Width" Value="0" />
-                                            <Setter Target="MasterListView.SelectionMode" Value="None" />
-                                            <Setter Target="MasterListView.BorderThickness" Value="0" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300" x:Name="MasterColumn"  />
-                                <ColumnDefinition x:Name="DetailColumn" />
-                            </Grid.ColumnDefinitions>
+        <SplitView.Pane>
 
-                            <ListView 
+            <StackPanel Background="Gray">
+
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE8FD;"
+
+                    Width="50" Height="50" Background="Transparent" Click="MenuButton1_Click"/>
+
+                    <TextBlock Text="Speiseplan" FontSize="18" VerticalAlignment="Center" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE713;"
+
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
+
+                    <TextBlock Text="Optionen" FontSize="18" VerticalAlignment="Center" />
+
+                </StackPanel>
+
+              
+            </StackPanel>
+
+        </SplitView.Pane>
+
+        <SplitView.Content>
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="0, 2, 0, 0" Loading="Grid_Loading">
+
+                <Pivot x:Name="DayPivot" Loading="DayPivot_Loading" ItemsSource="{Binding PivotItems}"  SelectionChanged="DayPivot_SelectionChanged" ItemContainerStyle="{ThemeResource MasterPivotItem}" Style="{ThemeResource MasterPivot}">
+                    <Pivot.HeaderTemplate>
+                        <DataTemplate x:DataType="models:Day">
+                            <Grid Margin="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="{x:Bind date, Converter={StaticResource DateToStringFormatConverter}}"/>
+                                <TextBlock Grid.Row="1" Text="{x:Bind date.DayOfWeek}" Style="{ThemeResource CaptionTextBlockStyle}" TextAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </Pivot.HeaderTemplate>
+                    <Pivot.ItemTemplate>
+                        <DataTemplate x:DataType="models:Day">
+                            <UserControl>
+                                <Grid BorderThickness="0, 2, 0, 0" Loading="Grid_Loading">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged" >
+                                            <VisualState x:Name="DefaultState">
+                                                <VisualState.StateTriggers>
+                                                    <AdaptiveTrigger MinWindowWidth="920" />
+                                                </VisualState.StateTriggers>
+                                            </VisualState>
+
+                                            <VisualState x:Name="NarrowState">
+                                                <VisualState.StateTriggers>
+                                                    <AdaptiveTrigger MinWindowWidth="0" />
+                                                </VisualState.StateTriggers>
+
+                                                <VisualState.Setters>
+                                                    <Setter Target="MasterColumn.Width" Value="*" />
+                                                    <Setter Target="DetailColumn.Width" Value="0" />
+                                                    <Setter Target="MasterListView.SelectionMode" Value="None" />
+                                                    <Setter Target="MasterListView.BorderThickness" Value="0" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300" x:Name="MasterColumn"  />
+                                        <ColumnDefinition x:Name="DetailColumn" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ListView 
                                 x:Name="MasterListView"
                                 Grid.Column="0"
                                 ItemsSource="{x:Bind menu.offers}"
                                 IsItemClickEnabled="True"
                                 Loaded="MasterListView_Loaded"
                                 ItemClick="ListView_ItemClick" Style="{ThemeResource MasterListView}" ItemContainerStyle="{ThemeResource MasterListViewItem}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Offer">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Offer">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
 
-                                            <Image Grid.RowSpan="2" Source="{x:Bind dish.images[0]}" Style="{ThemeResource MasterPreviewImage}"/>
-                                            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Text="{x:Bind dish.name}" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}"/>
-                                            <rating:RatingControl Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" ItemsCount="5" HorizontalAlignment="Left" Value="{x:Bind dish.ratingMedian}" Height="20" >
-                                                <rating:RatingControl.EmptyItemsDefinition>
-                                                    <rating:RateItemDefinition BackgroundColor="Transparent" OutlineColor="Orange"/>
-                                                </rating:RatingControl.EmptyItemsDefinition>
-                                                <rating:RatingControl.FullItemsDefinition>
-                                                    <rating:RateItemDefinition BackgroundColor="Orange" OutlineColor="Orange"/>
-                                                </rating:RatingControl.FullItemsDefinition>
-                                            </rating:RatingControl>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                                    <Image Grid.RowSpan="2" Source="{x:Bind dish.images[0]}" Style="{ThemeResource MasterPreviewImage}"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Text="{x:Bind dish.name}" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                                    <rating:RatingControl Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" ItemsCount="5" HorizontalAlignment="Left" Value="{x:Bind dish.ratingMedian}" Height="20" >
+                                                        <rating:RatingControl.EmptyItemsDefinition>
+                                                            <rating:RateItemDefinition BackgroundColor="Transparent" OutlineColor="Orange"/>
+                                                        </rating:RatingControl.EmptyItemsDefinition>
+                                                        <rating:RatingControl.FullItemsDefinition>
+                                                            <rating:RateItemDefinition BackgroundColor="Orange" OutlineColor="Orange"/>
+                                                        </rating:RatingControl.FullItemsDefinition>
+                                                    </rating:RatingControl>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
 
-                            <ContentPresenter
+                                    <ContentPresenter
                                 x:Name="DetailContentPresenter"
                                 Grid.Column="1"
                                 Content="{x:Bind menu.SelectedOffer, Mode=OneWay}"
                                 ContentTemplate="{StaticResource DetailViewTemplate}">
-                                <ContentPresenter.ContentTransitions>
-                                    <!-- Empty by default. See MasterListView_ItemClick -->
-                                    <TransitionCollection />
-                                </ContentPresenter.ContentTransitions>
-                            </ContentPresenter>
-                        </Grid>
-                    </UserControl>
-                </DataTemplate>
-            </Pivot.ItemTemplate>
-        </Pivot>
-    </Grid>
+                                        <ContentPresenter.ContentTransitions>
+                                            <!-- Empty by default. See MasterListView_ItemClick -->
+                                            <TransitionCollection />
+                                        </ContentPresenter.ContentTransitions>
+                                    </ContentPresenter>
+                                </Grid>
+                            </UserControl>
+                        </DataTemplate>
+                    </Pivot.ItemTemplate>
+                </Pivot>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
