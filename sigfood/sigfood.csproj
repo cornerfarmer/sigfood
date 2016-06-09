@@ -113,6 +113,7 @@
     <Compile Include="Models\Dish.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Offer.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="NetworkError.xaml.cs">
       <DependentUpon>NetworkError.xaml</DependentUpon>
     </Compile>

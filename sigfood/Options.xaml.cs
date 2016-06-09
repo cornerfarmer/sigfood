@@ -35,8 +35,9 @@ namespace sigfood
             if (rb != null)
             {
                 string color = rb.Tag.ToString();
-                Utility.viewModel.headerBgr = color.Substring(0, color.IndexOf("|"));
-                Utility.viewModel.headerBorder = color.Substring(color.IndexOf("|") + 1);
+                Utility.viewModel.settings.headerBgr = color.Substring(0, color.IndexOf("|"));
+                Utility.viewModel.settings.headerBorder = color.Substring(color.IndexOf("|") + 1);
+                Utility.viewModel.storeSettings();
             }
         }
 
@@ -59,7 +60,7 @@ namespace sigfood
         {
             RadioButton button = sender as RadioButton;
             string color = button.Tag.ToString();
-            button.IsChecked = (color == Utility.viewModel.headerBgr + "|" + Utility.viewModel.headerBorder);
+            button.IsChecked = (color == Utility.viewModel.settings.headerBgr + "|" + Utility.viewModel.settings.headerBorder);
         }
     }
 }

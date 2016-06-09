@@ -120,7 +120,7 @@ namespace sigfood
         private void DayPivot_Loading(FrameworkElement sender, object args)
         {
             Pivot pivot = sender as Pivot;
-            pivot.Background = GetSolidColorBrush((DataContext as MainViewModel).headerBgr);
+            pivot.Background = GetSolidColorBrush((DataContext as MainViewModel).settings.headerBgr);
         }
 
         public SolidColorBrush GetSolidColorBrush(string hex)
@@ -136,7 +136,7 @@ namespace sigfood
         private void Grid_Loading(FrameworkElement sender, object args)
         {
             Grid pivot = sender as Grid;
-            pivot.BorderBrush = GetSolidColorBrush((DataContext as MainViewModel).headerBorder);
+            pivot.BorderBrush = GetSolidColorBrush((DataContext as MainViewModel).settings.headerBorder);
         }
 
         

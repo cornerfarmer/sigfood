@@ -33,14 +33,11 @@ namespace sigfood.ViewModels
         public ObservableCollection<Day> PivotItems { get; set; }   
         public Day selectedDay { get; set; }
 
-        public string headerBgr { get; set; }
-
-        public string headerBorder { get; set; }
+        public Settings settings { get; set; }
         public MainViewModel()
         {
             PivotItems = new ObservableCollection<Day>();
-            headerBgr = "#BFC67D";
-            headerBorder = "#999E64";
+            settings = IOService.load().Result;
             try
             {          
                 loadNext();
@@ -75,5 +72,11 @@ namespace sigfood.ViewModels
         {
             return PivotItems.Count == 0;
         }
+
+        public void storeSettings()
+        {
+            IOService.store(settings);
+        }
+       
     }
 }

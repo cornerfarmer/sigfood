@@ -13,25 +13,42 @@ namespace sigfood.Services
 {
     class IOService
     {
-        public static async void store(Collection<Day> day)
+        
+        public static async void store(Settings settings)
         {
+            
             Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-            XmlSerializer ser = new XmlSerializer(typeof(Day));
+            XmlSerializer ser = new XmlSerializer(typeof(Settings));
             StringWriter stringWriter = new StringWriter();
-            ser.Serialize(stringWriter, day[0]);
+            ser.Serialize(stringWriter, settings);
 
-            StorageFile sampleFile = await localFolder.CreateFileAsync("cache.txt", CreationCollisionOption.ReplaceExisting);
+            StorageFile sampleFile = await localFolder.CreateFileAsync("settings.txt", CreationCollisionOption.ReplaceExisting);
             
             await FileIO.WriteTextAsync(sampleFile, stringWriter.ToString());
+            
         }
 
-        public static async void load()
+        public static async Task<Settings> load()
         {
-            Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+           
+            try
+            {
+                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-            StorageFile sampleFile = await localFolder.GetFileAsync("cache.txt");
-            string text = await FileIO.ReadTextAsync(sampleFile);
+                StorageFile sampleFile = await localFolder.GetFileAsync("settings.txt");
+                string text = await FileIO.ReadTextAsync(sampleFile);
+
+                XmlSerializer ser = new XmlSerializer(typeof(Settings));
+                StringReader stringReader = new StringReader(text);
+                Settings settings = (Settings)ser.Deserialize(stringReader);
+                
+                return settings;
+            } 
+            catch (Exception e)
+            {
+                return new Settings();
+            }
         }
 
     }
