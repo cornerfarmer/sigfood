@@ -23,34 +23,26 @@
 
 
 
-    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150">
+    <SplitView x:Name="MySplitView" Style="{ThemeResource HamburgerSplitView}" >
 
         <SplitView.Pane>
 
-            <StackPanel Background="Gray">
+            <StackPanel  Style="{ThemeResource HamburgerPanel}">
 
-                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
-
-                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+                <Button Style="{ThemeResource HamburgerButton}"  x:Name="HamburgerButton" Content="&#xE700;" Click="HamburgerButton_Click"/>
 
                 <StackPanel Orientation="Horizontal">
 
-                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE8FD;"
+                    <Button Style="{ThemeResource HamburgerButton}" x:Name="MenuButton1" Content="&#xE8FD;" Click="MenuButton1_Click"/>
 
-                    Width="50" Height="50" Background="Transparent" Click="MenuButton1_Click"/>
-
-                    <TextBlock Text="Speiseplan" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Style="{ThemeResource HamburgerText}"  Text="Speiseplan"/>
 
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
+                    <Button Style="{ThemeResource HamburgerButton}"  x:Name="MenuButton2" Content="&#xE713;" Click="MenuButton2_Click"/>
 
-                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE713;"
-
-                        Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
-
-                    <TextBlock Text="Optionen" FontSize="18" VerticalAlignment="Center" />
-
+                    <TextBlock Style="{ThemeResource HamburgerText}"  Text="Optionen" />
                 </StackPanel>
 
               
