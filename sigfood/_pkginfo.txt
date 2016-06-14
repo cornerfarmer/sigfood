@@ -1,1 +1,1 @@
-C:\Users\Dominik\Documents\Visual Studio 2015\Projects\sigfood\sigfood\AppPackages\sigfood_1.2.0.0\sigfood_1.2.0.0_x86_x64_arm.appxbundle
+C:\Users\Dominik\Documents\Visual Studio 2015\Projects\sigfood\sigfood\AppPackages\sigfood_1.3.0.0\sigfood_1.3.0.0_x86_x64_arm.appxbundle

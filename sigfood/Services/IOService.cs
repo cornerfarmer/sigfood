@@ -36,8 +36,8 @@ namespace sigfood.Services
             {
                 Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-                StorageFile sampleFile = await localFolder.GetFileAsync("settings.txt");
-                string text = await FileIO.ReadTextAsync(sampleFile);
+                StorageFile sampleFile = await localFolder.GetFileAsync("settings.txt").AsTask().ConfigureAwait(false);
+                string text = await FileIO.ReadTextAsync(sampleFile).AsTask().ConfigureAwait(false);
 
                 XmlSerializer ser = new XmlSerializer(typeof(Settings));
                 StringReader stringReader = new StringReader(text);
